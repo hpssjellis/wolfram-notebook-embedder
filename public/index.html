@@ -19,6 +19,8 @@ function myResetX() {
         embedding.then(nb => {
             nb.getCells().then(({cells}) => {
                 if (cells) {
+                    console.log("cells")
+                    console.log(cells)
                     const lastCell = cells[cells.length - 1];
                     return nb.setDynamicModuleVariable({
                        // console.log('lastCell')
