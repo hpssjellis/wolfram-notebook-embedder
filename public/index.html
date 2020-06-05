@@ -1,26 +1,19 @@
 <script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
 
-<p>
-    Enter the URL of a cloud object:
-    <input id="path" style="width:300px" value="https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb" />
-    <button onclick="embedNotebook()">Embed Notebook</button>
-</p>
-<p>
-    If the notebook's last cell contains a <code>Manipulate</code> with a variable <code>x</code>, this will reset it to 0:
-    <button onclick="resetX()">Reset <code>x</code></button>
-    <input type=button value=click onclick="resetX()">
-</p>
+<h1 align=center> Wolfram Cloud Javascript access</h1>
+
+<input type=button value=click onclick="myResetX()">
 <div id="myDiv01">...</div>
 
 <script>
 let embedding = null;
 
-function embedNotebook() {
+function myEmbedNotebook() {
     const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
     embedding = WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true});
 }
 
-function resetX() {
+function myResetX() {
     if (embedding) {
         embedding.then(nb => {
             nb.getCells().then(({cells}) => {
@@ -37,6 +30,6 @@ function resetX() {
     }
 }
     
-embedNotebook()    
+myEmbedNotebook()    
     
 </script>
