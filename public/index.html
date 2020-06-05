@@ -2,47 +2,47 @@
 
 <script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
 
-<!-- 
-
-<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
- 
-<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.1/dist/wolfram-notebook-embedder.min.js"></script>
-
-<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.1.5"></script>
-
--->
 
 
+<p>
+    Enter the URL of a cloud object:
+    <input id="path" style="width:300px" value="https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb" />
+    <button onclick="embedNotebook()">Embed Notebook</button>
+</p>
+<p>
+    If the notebook's last cell contains a <code>Manipulate</code> with a variable <code>x</code>, this will reset it to 0:
+    <button onclick="resetX()">Reset <code>x</code></button>
+</p>
+<div id="container"></div>
 
-<h2 align=center>Wolfram Language on a Javascript Web Page</h2>
-<div id="myDiv01"></div>
+
+
+
+
+
 
 <script>
-var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb', document.getElementById('myDiv01'));
-console.log(embedding.response)
- 
- /*
-embedding.then(function (nb) {
-    // This will reset the DynamicModule variable x$$
-    // in the first cell of the notebook.
-    return nb.getCells().then(function (cells) {
-        nb.setDynamicModuleVariable({
-            cellId: cells[0].id,
-            name: 'x$$',
-            value: 0
-        });
-    });
-}) 
- */
- 
- 
-//var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/d0cfb566-3d7a-4549-b209-2ed5a435cac0', document.getElementById('myDiv01'));
-//var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/21ce32c0-4458-48f5-b3f4-5c128009497f', document.getElementById('myDiv01'));
+let embedding = null;
 
- 
- 
-//var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb', document.getElementById('myDiv01'));
+function embedNotebook() {
+    const url = document.getElementById('path').value;
+    embedding = WolframNotebookEmbedder.embed(url, document.getElementById('container'), {allowInteract: true});
+}
 
-
+function resetX() {
+    if (embedding) {
+        embedding.then(nb => {
+            nb.getCells().then(({cells}) => {
+                if (cells) {
+                    const lastCell = cells[cells.length - 1];
+                    return nb.setDynamicModuleVariable({
+                        cellId: lastCell.id,
+                        name: 'x$$',
+                        value: 0
+                    });
+                }
+            })
+        })
+    }
+}
 </script>
-
