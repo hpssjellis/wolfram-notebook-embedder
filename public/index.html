@@ -8,15 +8,16 @@
 <p>
     If the notebook's last cell contains a <code>Manipulate</code> with a variable <code>x</code>, this will reset it to 0:
     <button onclick="resetX()">Reset <code>x</code></button>
+    <input type=button value=click onclick="resetX()">
 </p>
-<div id="container"></div>
+<div id="myDiv01">...</div>
 
 <script>
 let embedding = null;
 
 function embedNotebook() {
-    const url = document.getElementById('path').value;
-    embedding = WolframNotebookEmbedder.embed(url, document.getElementById('container'), {allowInteract: true});
+    const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+    embedding = WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true});
 }
 
 function resetX() {
@@ -35,4 +36,7 @@ function resetX() {
         })
     }
 }
+    
+embedNotebook()    
+    
 </script>
