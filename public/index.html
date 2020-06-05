@@ -20,6 +20,20 @@
 <script>
 var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb', document.getElementById('myDiv01'));
 
+embedding.then(function (nb) {
+    // This will reset the DynamicModule variable x$$
+    // in the first cell of the notebook.
+    return nb.getCells().then(function (cells) {
+        nb.setDynamicModuleVariable({
+            cellId: cells[0].id,
+            name: 'x$$',
+            value: 0
+        });
+    });
+}) 
+ 
+ 
+ 
 //var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/d0cfb566-3d7a-4549-b209-2ed5a435cac0', document.getElementById('myDiv01'));
 //var embedding = WolframNotebookEmbedder.embed('https://www.wolframcloud.com/obj/21ce32c0-4458-48f5-b3f4-5c128009497f', document.getElementById('myDiv01'));
 
