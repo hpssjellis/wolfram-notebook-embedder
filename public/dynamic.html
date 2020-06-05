@@ -1,0 +1,73 @@
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+<h1 align=center> Wolfram Cloud Javascript access</h1>
+
+<input type=button value="Promise" onclick="myPromiseResetX()">
+<input type=button value="Async" onclick="myAsyncResetX()">
+<div id="myDiv01">...</div>
+
+<script>
+let embedding = null;
+
+function myEmbedNotebook() {
+    const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+   // const url = "https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb"
+    embedding = WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true});
+}
+
+async function myPromiseResetX() {
+    if (embedding) {
+        embedding.then(nb => {
+            nb.getCells().then(({cells}) => {
+                if (cells) {
+                    console.log('cells')
+                    console.log(cells)
+                    const lastCell = cells[cells.length - 1];
+                    return nb.setDynamicModuleVariable({
+                        cellId: lastCell.id,
+                       // cellId: cells[1].id,
+                        name: 'x$$',
+                        value: 0
+                    });
+                }
+            })
+        })
+    }
+}
+
+
+async function myAsyncResetX() {
+  if (embedding) {
+     try {
+        let nb = await embedding
+        console.log('nb')
+        console.log(nb)
+
+        let myCells = await nb.getCells()
+        console.log('myCells')
+        console.log(myCells)
+
+        const lastCell = await myCells.cells[myCells.cells.length - 1];
+        console.log('lastCell')
+        console.log(lastCell)
+
+        let myReturnAction = await nb.setDynamicModuleVariable({
+                        cellId: lastCell.id,
+                        name: 'x$$',
+                        value: 0.5
+                    })
+        console.log('myReturnAction')
+        console.log(myReturnAction)
+
+    } 
+    catch (err) {
+       console.log('fetch failed', err);   
+    } 
+  }   // end if
+}
+
+
+    
+myEmbedNotebook()    
+    
+</script>
