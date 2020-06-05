@@ -1,1 +1,12 @@
-sdfd
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+<h1 align=center> Wolfram Cloud Javascript access</h1>
+
+<div id="myDiv01">...</div>
+
+<script>
+  
+const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+let embedding = WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true});
+  
+</script>
