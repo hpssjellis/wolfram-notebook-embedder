@@ -23,8 +23,8 @@ async function myResetX() {
                     console.log(cells)
                     const lastCell = cells[cells.length - 1];
                     return nb.setDynamicModuleVariable({
-                       // cellId: lastCell.id,
-                        cellId: cells[1].id,
+                        cellId: lastCell.id,
+                       // cellId: cells[1].id,
                         name: 'x$$',
                         value: 0
                     });
