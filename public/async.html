@@ -1,0 +1,46 @@
+<body onload="{
+  myEmbedNotebook()  
+  setTimeout(function(){
+      myShowAll() 
+  }, 3000); // Notebook needs a bit of time
+}">
+
+
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+
+<h1 align=center> Wolfram Cloud Javascript Async Access</h1>
+
+<input type=button value="Move Slider to" onclick="myShowAll()">
+<input id="myNumber" type=text value="0.80" onChange="{
+   if (this.value >=0 && this.value <=1 ){
+     myShowAll()  
+   }
+
+}">
+<div id="myDiv01">1...</div>
+
+
+
+<script>
+let embedding = null;
+
+async function myEmbedNotebook() {
+    const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+    embedding = await WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true, width: 500});
+}
+
+
+async function myShowAll() {
+  if (embedding) {
+    try {
+        let myNoteBook = await embedding
+        let myAsync = await myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:document.getElementById('myNumber').value})
+    } 
+    catch (err) {
+       console.log('fetch failed', err);   
+    } 
+  }   // end if
+}
+   
+</script>
