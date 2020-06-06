@@ -1,0 +1,83 @@
+<body onload="{
+  myEmbedNotebook()  
+setTimeout(function(){myShowAll() }, 3000); // needs notebook loaded before attempt.
+}">
+
+
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+
+
+
+<h1 align=center> Wolfram Cloud Javascript Access</h1>
+
+<input type=button value="Show all if did not auto load" onclick="myShowAll()">
+<div id="myDiv01">1...</div>
+<div id="myDiv02">2...</div>
+<div id="myDiv03">3...</div>
+
+
+
+<script>
+let embedding = null;
+
+async function myEmbedNotebook() {
+    const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+   // const url = "https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb"
+    embedding = await WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true, width: 500});
+}
+
+
+
+async function myShowAll() {
+  if (embedding) {
+     try {
+        let myNoteBook = await embedding
+        console.log('myNoteBook')
+        console.log(myNoteBook)
+
+        let myNoteBook2 = await Object.values(myNoteBook)
+        console.log('myNoteBook2')
+        console.log(myNoteBook2)
+
+        let myCells = await myNoteBook.getCells()
+        console.log('myCells')
+        console.log(myCells)
+
+        const lastCell = await myCells.cells[myCells.cells.length - 1];
+        console.log('lastCell')
+        console.log(lastCell)
+
+        let myReturnAction = await myNoteBook.setDynamicModuleVariable({
+                        cellId: lastCell.id,
+                        name: 'x$$',
+                        value: 0.5
+                    })
+        console.log('myReturnAction')
+        console.log(myReturnAction)
+
+
+
+
+
+        let myTestObject = await myNoteBook.getDimensions()
+        console.log('myTest Object')
+        console.log(myTestObject)
+
+        let myTestArray = await Object.values(myTestObject)
+        console.log('myTestArray')
+        console.log(myTestArray)
+
+
+
+        document.getElementById('myDiv02').innerHTML = 'cool'+await JSON.stringify(myTestObject,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+  
+        document.getElementById('myDiv03').innerHTML  = await JSON.stringify(myTestArray,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+    } 
+    catch (err) {
+       console.log('fetch failed', err);   
+    } 
+  }   // end if
+}
+   
+</script>
