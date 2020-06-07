@@ -59,13 +59,24 @@ async function myShowAll() {
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getSelection() </b><br>'+ await JSON.stringify(await myNoteBook.getSelection(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCells() </b><br>'+ await JSON.stringify(await myNoteBook.getCells(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) </b><br>'+ await JSON.stringify(await myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) ,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElementParent() </b><br>'+ await JSON.stringify(await myNoteBook.getElementParent(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElementUUID() </b><br>'+ await JSON.stringify(await myNoteBook.getElementUUID(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCellContent({cellId:"c6"}) </b><br>'+ await JSON.stringify(await myNoteBook.getCellContent({cellId:"c6"}),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCellRenderingMethod({cellId:"c6"}) </b><br>'+ await JSON.stringify(await myNoteBook.getCellRenderingMethod({cellId:"c6"}),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.selectElements() </b><br>'+ await JSON.stringify(await myNoteBook.selectElements(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.moveSelectionDirections() </b><br>'+ await JSON.stringify(await myNoteBook.moveSelectionDirections(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
         document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
- 
 
 
-        let myTestObject = await myNoteBook
+  <!--  These are different  -->
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.setAttributes({width:400}) </b><br>'
+        let myCellAttributes = await myNoteBook.setAttributes({width:400})
+
+
+
+        let myTestObject = await myNoteBook.moveSelectionDirections()
         console.log('myTest Object')
         console.log(myTestObject)
 
@@ -86,3 +97,78 @@ async function myShowAll() {
 }
    
 </script>
+
+<br><br>
+
+Trying to figure out how to control the following using Javascript
+<pre>
+abortEvaluation()
+addEventListener()
+clearSelectionUponKeyboardDismissal()
+closeGroup()
+copyData()
+cutData()
+detach()
+evaluateCell()
+evaluateElements()
+evaluateExpression()
+evaluateSelection()
+<strike>getCellContent()</strike>
+<strike>getCellRenderingMethod()</strike>
+<strike>getCells()</strike>
+<strike>getDimensions()</strike>
+getDynamicModuleVariable()
+<strike>getElementParent()</strike>
+<strike>getElementUUID()</strike>
+<strike>getElements()</strike>
+getFunctionTemplates()
+getLastGeneratedCell()
+getOption()
+<strike>getScrollPosition()</strike>
+<strike>getSelection()</strike>
+getUndoState()
+insertAutocompletion()
+insertCellAtCursor()
+insertCellBefore()
+insertFunctionTemplate()
+isEvaluatable()
+moveSelection()
+moveSelectionDirections()
+openGroup()
+pasteData()
+redo()
+removeCell()
+removeEventListener()
+<strike>selectElements()</strike>
+selectSeparatorAfterElement()
+selectSeparatorBeforeElement()
+<strike>setAttributes()</strike>
+setCellContent()
+<strike>setDynamicModuleVariable()</strike>
+setOptions()
+setScrollPosition()
+undo()
+
+</pre>
+
+
+
+Note: To Tweet Wolfram:
+<pre>
+@wolframtap GeoGraphics[Text[Style["hello",50]],GeoRange->"World"]
+@wolframtap GeoGraphics[Text[Style["hello",50]],GeoRange->"Canada"]
+@wolframtap GeoGraphics[Entity["Country", "France"]]
+
+@wolframtap GeoGraphics[
+ GeoPath[{Entity["City", {"Santiago", "Metropolitana", "Chile"}], 
+   Entity["City", {"Madrid", "Madrid", "Spain"}]}]]
+
+
+@wolframtap Plot3D[Sin[x]Cos[y],{x,0,5},{y,1,10}]
+
+@wolframtap Manipulate[x,{x,0,1}]
+
+</pre>
+
+
+
