@@ -1,6 +1,5 @@
-<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
 
-<h1 align=center> Wolfram Cloud Javascript access</h1>
+<h1 align=center> Wolfram Cloud Javascript Access by Rocksetta</h1>
 
 <a href="basic.html">basic.html</a><br>
 
@@ -8,38 +7,86 @@
 
 <a href="dynamic.html">dynamic.html</a>
 
-<input type=button value=click onclick="myResetX()">
-<div id="myDiv01">...</div>
+
+
+<body onload="{
+  myEmbedNotebook()  
+  setTimeout(function(){
+      myShowAll() 
+  }, 3000); // Notebook needs a bit of time
+}">
+
+
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+
+
+
+<h1 align=center> Wolfram Cloud Javascript Access</h1>
+
+<input type=button value="Show all if did not auto load" onclick="myShowAll()">
+<div id="myDiv01">1...</div>
+<div id="myDiv03">3...</div>
+---------------------------------------
+<div id="myDiv02">2...</div>
+
+
 
 <script>
 let embedding = null;
 
-function myEmbedNotebook() {
+async function myEmbedNotebook() {
     const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
    // const url = "https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb"
-    embedding = WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true});
+    embedding = await WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true, width: 500});
 }
 
-async function myResetX() {
-    if (embedding) {
-        embedding.then(nb => {
-            nb.getCells().then(({cells}) => {
-                if (cells) {
-                    console.log('cells')
-                    console.log(cells)
-                    const lastCell = cells[cells.length - 1];
-                    return nb.setDynamicModuleVariable({
-                        cellId: lastCell.id,
-                       // cellId: cells[1].id,
-                        name: 'x$$',
-                        value: 0
-                    });
-                }
-            })
-        })
-    }
+
+
+async function myShowAll() {
+  if (embedding) {
+     try {
+        let myNoteBook = await embedding
+        console.log('myNoteBook')
+        console.log(myNoteBook)
+
+        let myNoteBook2 = await Object.values(myNoteBook)
+        console.log('myNoteBook2')
+        console.log(myNoteBook2)
+
+
+
+        document.getElementById('myDiv02').innerHTML = ''
+        document.getElementById('myDiv02').innerHTML += '<b>myNoteBook.getDimensions() </b><br>'+ await JSON.stringify(await myNoteBook.getDimensions(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElements() </b><br>'+ await JSON.stringify(await myNoteBook.getElements(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getScrollPosition() </b><br>'+ await JSON.stringify(await myNoteBook.getScrollPosition(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getSelection() </b><br>'+ await JSON.stringify(await myNoteBook.getSelection(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCells() </b><br>'+ await JSON.stringify(await myNoteBook.getCells(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) </b><br>'+ await JSON.stringify(await myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) ,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+ 
+
+
+        let myTestObject = await myNoteBook
+        console.log('myTest Object')
+        console.log(myTestObject)
+
+        let myTestArray = await Object.values(myTestObject)
+        console.log('myTestArray')
+        console.log(myTestArray)
+
+        document.getElementById('myDiv03').innerHTML = 'myTest Object: '+await JSON.stringify(myTestObject,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+  
+
+
+
+  } 
+    catch (err) {
+       console.log('fetch failed', err);   
+    } 
+  }   // end if
 }
-    
-myEmbedNotebook()    
-    
+   
 </script>
