@@ -1,0 +1,148 @@
+<body onload="{
+  myEmbedNotebook()  
+  setTimeout(function(){
+      myShowAll() 
+  }, 3000); // Notebook needs a bit of time
+}">
+
+
+<script crossorigin src="https://unpkg.com/wolfram-notebook-embedder@0.2.0-alpha.0"></script>
+
+
+
+
+<h1 align=center> Wolfram Cloud Javascript Access</h1>
+
+<input type=button value="Show all if did not auto load" onclick="myShowAll()">
+<div id="myDiv01">Div 1 Nope</div>
+<div id="myDiv03">Div 3 Nope</div>
+---------------------------------------
+<div id="myDiv02">Div 2 Nope</div>
+
+
+
+<script>
+let embedding = null;
+
+async function myEmbedNotebook() {
+    const url = "https://www.wolframcloud.com/obj/jpoeschko/Public/Example.nb"
+   // const url = "https://www.wolframcloud.com/obj/keyfreemusic/Published/a01.nb"
+    embedding = await WolframNotebookEmbedder.embed(url, document.getElementById('myDiv01'), {allowInteract: true, width: 500});
+}
+
+
+
+async function myShowAll() {
+  if (embedding) {
+     try {
+        let myNoteBook = await embedding
+        console.log('myNoteBook')
+        console.log(myNoteBook)
+
+        let myNoteBook2 = await Object.values(myNoteBook)
+        console.log('myNoteBook2')
+        console.log(myNoteBook2)
+
+
+
+        document.getElementById('myDiv02').innerHTML = ''
+        document.getElementById('myDiv02').innerHTML += '<b>myNoteBook.getDimensions() </b><br>'+ await JSON.stringify(await myNoteBook.getDimensions(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElements() </b><br>'+ await JSON.stringify(await myNoteBook.getElements(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getScrollPosition() </b><br>'+ await JSON.stringify(await myNoteBook.getScrollPosition(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getSelection() </b><br>'+ await JSON.stringify(await myNoteBook.getSelection(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCells() </b><br>'+ await JSON.stringify(await myNoteBook.getCells(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) </b><br>'+ await JSON.stringify(await myNoteBook.setDynamicModuleVariable({cellId:"c19", name:"x$$", value:0.8}) ,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElementParent() </b><br>'+ await JSON.stringify(await myNoteBook.getElementParent(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getElementUUID() </b><br>'+ await JSON.stringify(await myNoteBook.getElementUUID(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCellContent({cellId:"c6"}) </b><br>'+ await JSON.stringify(await myNoteBook.getCellContent({cellId:"c6"}),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.getCellRenderingMethod({cellId:"c6"}) </b><br>'+ await JSON.stringify(await myNoteBook.getCellRenderingMethod({cellId:"c6"}),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.selectElements() </b><br>'+ await JSON.stringify(await myNoteBook.selectElements(),null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook </b><br>'+ await JSON.stringify(await myNoteBook,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+
+
+  <!--  These are different  -->
+        document.getElementById('myDiv02').innerHTML += '<br><br><b>myNoteBook.setAttributes({width:300}) </b><br>'
+        let myCellAttributes = await myNoteBook.setAttributes({width:400})
+
+
+
+        let myTestObject = await myNoteBook
+        console.log('myTest Object')
+        console.log(myTestObject)
+
+        let myTestArray = await Object.values(myTestObject)
+        console.log('myTestArray')
+        console.log(myTestArray)
+
+        document.getElementById('myDiv03').innerHTML = 'myTest Object: '+await JSON.stringify(myTestObject,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+  
+
+
+
+  } 
+    catch (err) {
+       console.log('fetch failed', err);   
+    } 
+  }   // end if
+}
+   
+</script>
+
+<br><br>
+
+Trying to figure out how to control the following using Javascript
+<pre>
+abortEvaluation()
+addEventListener()
+clearSelectionUponKeyboardDismissal()
+closeGroup()
+copyData()
+cutData()
+detach()
+evaluateCell()
+evaluateElements()
+evaluateExpression()
+evaluateSelection()
+<strike>getCellContent()</strike>
+<strike>getCellRenderingMethod()</strike>
+<strike>getCells()</strike>
+<strike>getDimensions()</strike>
+getDynamicModuleVariable()
+<strike>getElementParent()</strike>
+<strike>getElementUUID()</strike>
+<strike>getElements()</strike>
+getFunctionTemplates()
+getLastGeneratedCell()
+getOption()
+<strike>getScrollPosition()</strike>
+<strike>getSelection()</strike>
+getUndoState()
+insertAutocompletion()
+insertCellAtCursor()
+insertCellBefore()
+insertFunctionTemplate()
+isEvaluatable()
+moveSelection()
+moveSelectionDirections()
+openGroup()
+pasteData()
+redo()
+removeCell()
+removeEventListener()
+<strike>selectElements()</strike>
+selectSeparatorAfterElement()
+selectSeparatorBeforeElement()
+<strike>setAttributes()</strike>
+setCellContent()
+<strike>setDynamicModuleVariable()</strike>
+setOptions()
+setScrollPosition()
+undo()
+
+</pre>
+
+
+
